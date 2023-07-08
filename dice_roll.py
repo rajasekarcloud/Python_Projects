@@ -12,8 +12,20 @@ def dice(in_number) -> list[int]: # -> Type hinting to state what datatype the f
         rolls.append(randint(1,10));
     return rolls;
 
-in_number = int(input("How many time to roll dice? "));
-if in_number > 0 and in_number < 10:
-    print(dice(in_number));
-else:
-    print("Enter number greater than 0 and less than 10");
+def main():
+    while True:
+       try:
+           in_number = input("Enter # of times to roll the dice: ");
+           if in_number.lower() == 'exit':
+               print("Thanks for playing");
+               break;
+           elif int(in_number) > 0 and int(in_number) <=10:
+               print(dice(int(in_number)));
+           else:
+               print("Enter a number between 1 and 10")
+       except ValueError as e:
+           print("Enter a valid number");
+
+
+if __name__ == '__main__':
+    main();
