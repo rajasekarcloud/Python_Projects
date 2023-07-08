@@ -20,7 +20,9 @@ def main():
                print("Thanks for playing");
                break;
            elif int(in_number) > 0 and int(in_number) <=10:
-               print(dice(int(in_number)));
+               # print(dice(int(in_number)));# Output comes as list [1, 2, 3, 4, 5]
+            # We can unpack them
+                print(*dice(int(in_number)),sep=',');
            else:
                print("Enter a number between 1 and 10")
        except ValueError as e:
