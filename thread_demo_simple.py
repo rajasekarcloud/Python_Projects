@@ -12,4 +12,4 @@ if __name__ == '__main__':
     t2 = cube(values);
     print(f'Single Threaded Code Took :{t2 - t1} seconds');
 
-
+# Code took: Single Threaded Code Took :4.250000000000087e-05 seconds
