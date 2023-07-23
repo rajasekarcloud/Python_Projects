@@ -7,3 +7,11 @@ for i in data.values():
     if i > temp:
         temp = i;
 print(f'Maximum value in the dict is {temp}');
+# Another Method
+if data:
+    max_value = max(set(data.values()));
+    min_value = min(set(data.values()));
+    print(max_value, min_value);
+else:
+    print(f'Empty Dict');
+
