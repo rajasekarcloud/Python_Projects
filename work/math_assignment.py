@@ -1,4 +1,9 @@
 # Maths assignment application buid using AWS Kiro with Streamlit and Python
+# random, sqlite3, and datetime are all part of Python's standard library, so no install needed for those.
+# streamlit>=1.28.0
+# pandas>=2.0.0
+# plotly>=5.17.0
+
 import streamlit as st
 import random
 import sqlite3
