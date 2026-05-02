@@ -1,9 +1,3 @@
-# Maths assignment application buid using AWS Kiro with Streamlit and Python
-# random, sqlite3, and datetime are all part of Python's standard library, so no install needed for those.
-# streamlit>=1.28.0
-# pandas>=2.0.0
-# plotly>=5.17.0
-
 import streamlit as st
 import random
 import sqlite3
@@ -98,11 +92,17 @@ def generate_problem(difficulty, operation):
         answer = sum(numbers)
         problem = " + ".join(map(str, numbers))
     elif operation == "Subtraction ➖":
-        # Start with largest number and subtract the rest
-        numbers.sort(reverse=True)
-        answer = numbers[0]
-        for num in numbers[1:]:
-            answer -= num
+        # Pick a guaranteed non-negative answer first, then build subtrahends
+        if difficulty == "Easy (1-10)":
+            max_val = 10
+        elif difficulty == "Medium (1-50)":
+            max_val = 50
+        else:
+            max_val = 100
+        answer = random.randint(0, max_val)
+        subtrahends = sorted([random.randint(1, max_val) for _ in range(4)])
+        start_num = answer + sum(subtrahends)
+        numbers = [start_num] + list(reversed(subtrahends))
         problem = " - ".join(map(str, numbers))
     elif operation == "Multiplication ✖️":
         # Use smaller numbers for multiplication to keep answer reasonable
@@ -117,24 +117,19 @@ def generate_problem(difficulty, operation):
             answer *= num
         problem = " × ".join(map(str, numbers))
     else:  # Division
-        # For division, create a chain that results in a whole number
-        # Start with a large number and divide by smaller ones
+        # Use exactly 2 numbers: dividend ÷ divisor = whole number
         if difficulty == "Easy (1-10)":
-            divisors = [random.randint(2, 5) for _ in range(5)]
+            divisor = random.randint(2, 5)
+            answer = random.randint(1, 10)
         elif difficulty == "Medium (1-50)":
-            divisors = [random.randint(2, 7) for _ in range(5)]
+            divisor = random.randint(2, 10)
+            answer = random.randint(1, 20)
         else:
-            divisors = [random.randint(2, 10) for _ in range(5)]
+            divisor = random.randint(2, 12)
+            answer = random.randint(1, 50)
         
-        # Calculate starting number to ensure whole number result
-        product = 1
-        for d in divisors:
-            product *= d
-        answer = random.randint(1, 10)
-        start_num = product * answer
-        
-        numbers = [start_num] + divisors
-        problem = " ÷ ".join(map(str, numbers))
+        dividend = divisor * answer
+        problem = f"{dividend} ÷ {divisor}"
     
     return problem, answer
 
